@@ -1,0 +1,197 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-gray-950 text-gray-100 font-cairo;
+    font-family: 'Cairo', sans-serif;
+  }
+  
+  html {
+    @apply scroll-smooth;
+    direction: rtl;
+  }
+  
+  /* RTL Support */
+  [dir="rtl"] {
+    text-align: right;
+  }
+  
+  .rtl {
+    direction: rtl;
+    text-align: right;
+  }
+}
+
+@layer components {
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-dark {
+    @apply bg-black/40 backdrop-blur-xl border border-white/5;
+  }
+  
+  .btn-primary {
+    @apply bg-coffee-600 hover:bg-coffee-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium;
+  }
+  
+  .btn-secondary {
+    @apply bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium;
+  }
+  
+  .btn-success {
+    @apply bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium;
+  }
+  
+  .btn-warning {
+    @apply bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition-all duration-200 font-medium;
+  }
+  
+  /* Modern POS Dark Theme Improvements */
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-xl hover:shadow-coffee-500/10 hover:bg-white/10;
+  }
+  
+  .btn-modern {
+    @apply px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 active:scale-95;
+  }
+  
+  .glass-morphism {
+    @apply bg-black/30 backdrop-blur-2xl border border-white/10 rounded-2xl;
+  }
+  
+  .cafe-gradient {
+    background: linear-gradient(135deg, #8B4513 0%, #D2691E 50%, #A0522D 100%);
+  }
+  
+  .text-shadow-cafe {
+    text-shadow: 0 2px 4px rgba(139, 69, 19, 0.3);
+  }
+  
+  .input-field {
+    @apply bg-white/5 border border-white/10 rounded-lg px-4 py-2 text-white placeholder-gray-400 focus:outline-none focus:border-coffee-500 transition-all duration-200;
+  }
+  
+  select, .select-field {
+    @apply bg-black border border-white/10 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-coffee-500 transition-all duration-200;
+  }
+  
+  select option {
+    @apply bg-black text-white;
+  }
+  
+  /* Fix dropdown scrollbar issues globally */
+  select::-webkit-scrollbar,
+  .select-field::-webkit-scrollbar {
+    display: none;
+  }
+  
+  select,
+  .select-field {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  
+  /* Prevent dropdown overflow issues */
+  .select-field,
+  select {
+    max-height: none;
+    overflow: visible;
+  }
+  
+  /* Fix any dropdown container overflow */
+  [role="listbox"],
+  [role="combobox"],
+  .dropdown-content {
+    overflow: visible !important;
+    max-height: 200px;
+    overflow-y: auto !important;
+  }
+  
+  [role="listbox"]::-webkit-scrollbar,
+  [role="combobox"]::-webkit-scrollbar,
+  .dropdown-content::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  [role="listbox"]::-webkit-scrollbar-track,
+  [role="combobox"]::-webkit-scrollbar-track,
+  .dropdown-content::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  [role="listbox"]::-webkit-scrollbar-thumb,
+  [role="combobox"]::-webkit-scrollbar-thumb,
+  .dropdown-content::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 2px;
+  }
+  
+  .card {
+    @apply glass rounded-xl p-6;
+  }
+  
+  .sidebar-item {
+    @apply flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 cursor-pointer;
+  }
+  
+  .sidebar-item-active {
+    @apply bg-coffee-600 text-white;
+  }
+  
+  .sidebar-item-inactive {
+    @apply text-gray-400 hover:bg-white/5 hover:text-white;
+  }
+  
+  .table-row {
+    @apply border-b border-white/5 hover:bg-white/5 transition-all duration-200;
+  }
+  
+  .badge {
+    @apply px-2 py-1 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-green-500/20 text-green-400;
+  }
+  
+  .badge-warning {
+    @apply bg-yellow-500/20 text-yellow-400;
+  }
+  
+  .badge-danger {
+    @apply bg-red-500/20 text-red-400;
+  }
+  
+  .badge-info {
+    @apply bg-blue-500/20 text-blue-400;
+  }
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    @apply bg-white/10 rounded-full;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    @apply bg-white/20;
+  }
+}
