@@ -1,0 +1,95 @@
+{
+  "name": "coffee-language-pos",
+  "version": "1.0.0",
+  "description": "Coffee Language - Arabic Coffee Shop POS System",
+  "main": "dist-electron/main.js",
+  "author": "Coffee Language",
+  "license": "PROPRIETARY",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "build:electron": "tsc -p tsconfig.node.json",
+    "electron:dev": "concurrently \"npm run dev\" \"npm run build:electron && wait-on http://localhost:5173 && electron .\"",
+    "electron": "npm run build:electron && electron .",
+    "electron:build": "npm run build && npm run build:electron && electron-builder",
+    "electron:build:portable": "npm run build && npm run build:electron && electron-builder --win portable",
+    "electron:build:installer": "npm run build && npm run build:electron && electron-builder --win",
+    "electron:build:all": "npm run build && npm run build:electron && electron-builder --win --win portable",
+    "electron:package": "npm run build && npm run build:electron && electron-builder --dir",
+    "electron:clean": "rimraf dist dist-electron output",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:studio": "prisma studio",
+    "start": "npm run electron",
+    "dist": "npm run electron:build",
+    "dist:portable": "npm run electron:build:portable",
+    "dist:installer": "npm run electron:build:installer"
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.7.1",
+    "@tanstack/react-query": "^5.17.0",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^9.2.2",
+    "date-fns": "^3.0.6",
+    "framer-motion": "^10.18.0",
+    "lucide-react": "^0.303.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.49.3",
+    "react-router-dom": "^6.21.1",
+    "recharts": "^2.10.3",
+    "zod": "^3.22.4",
+    "zustand": "^4.4.7"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/better-sqlite3": "^7.6.8",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "concurrently": "^8.2.2",
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.1",
+    "postcss": "^8.4.32",
+    "prisma": "^5.7.1",
+    "tailwindcss": "^3.4.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vite-plugin-electron": "^0.28.0",
+    "wait-on": "^7.2.0"
+  },
+  "build": {
+    "appId": "com.coffeelanguage.pos",
+    "productName": "Coffee Language POS",
+    "directories": {
+      "output": "output"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "dir",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "publisherName": "Coffee Language",
+      "requestedExecutionLevel": "asInvoker"
+    },
+    "electronDist": "node_modules/electron/dist",
+    "electronVersion": "28.3.3"
+  }
+}

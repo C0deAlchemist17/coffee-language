@@ -1,0 +1,36 @@
+appId: com.coffeelanguage.pos
+productName: Coffee Language POS
+copyright: Copyright © 2024 Coffee Language
+directories:
+  buildResources: build
+  output: release
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - node_modules/**/*
+  - prisma/**/*
+  - package.json
+asar: true
+asarUnpack:
+  - node_modules/prisma/**/*
+  - node_modules/@prisma/**/*
+  - prisma/**/*
+win:
+  target:
+    - target: nsis
+      arch:
+        - x64
+    - target: portable
+      arch:
+        - x64
+  artifactName: ${productName}-${version}-${arch}.${ext}
+nsis:
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: Coffee Language POS
+  perMachine: false
+  runAfterFinish: true
+portable:
+  artifactName: ${productName}-portable-${version}.${ext}
