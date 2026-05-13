@@ -38,6 +38,11 @@ yarn-error.log*
 *.swo
 *~
 
+# Database
+prisma/database.db
+prisma/*.db
+prisma/*.db-journal
+
 # OS
 Thumbs.db
 
