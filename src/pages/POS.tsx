@@ -4,6 +4,7 @@ import { useCartStore } from '../store/cartStore';
 import { formatCurrency } from '../utils/format';
 import { useNotificationStore } from '../store/notificationStore';
 import { Search, Plus, Minus, Trash2, CreditCard, Wallet, DollarSign, Printer, Clock, User, Table as TableIcon, X, ShoppingCart, Package } from 'lucide-react';
+import ReceiptPrinter from '../components/ReceiptPrinter';
 
 interface Product {
   id: string;
@@ -28,6 +29,8 @@ const POS: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([{ id: 'all', name: 'All', nameAr: 'الكل' }]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showReceiptPrinter, setShowReceiptPrinter] = useState(false);
+  const [currentOrder, setCurrentOrder] = useState<any>(null);
 
   useEffect(() => {
     try {
@@ -147,10 +150,49 @@ const POS: React.FC = () => {
     }
   };
 
+  const handlePrint = () => {
+    if (items.length === 0) {
+      addNotification({
+        title: 'السلة فارغة',
+        message: 'يرجى إضافة منتجات إلى السلة أولاً',
+        type: 'error',
+      });
+      return;
+    }
+
+    // Create order for printing
+    const order = {
+      id: Date.now().toString(),
+      number: `#${String(Math.floor(Math.random() * 10000)).padStart(4, '0')}`,
+      customer: 'عميل نقدي',
+      total: getTotal(),
+      status: 'PENDING',
+      createdAt: new Date(),
+      items: items.map(item => ({
+        productId: item.productId,
+        productName: item.product.nameAr || item.product.name,
+        quantity: item.quantity,
+        price: item.price,
+      })),
+    };
+
+    setCurrentOrder(order);
+    setShowReceiptPrinter(true);
+  };
+
+  const handlePrintReceipt = async () => {
+    // Simulate print - in real implementation, this would use window.print() or electron API
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, 1000);
+    });
+  };
+
   return (
-    <div className="h-full flex gap-6">
+    <div className="h-full flex gap-6 overflow-hidden">
       {/* Products Section */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Search and Filter */}
         <div className="glass rounded-xl p-4 mb-6">
           <div className="flex items-center gap-4 mb-4">
@@ -205,7 +247,7 @@ const POS: React.FC = () => {
       </div>
 
       {/* Cart Section */}
-      <div className="w-96 glass rounded-xl flex flex-col">
+      <div className="w-96 max-w-sm glass rounded-xl flex flex-col flex-shrink-0">
         {/* Order Type */}
         <div className="p-4 border-b border-white/10">
           <div className="flex gap-2">
@@ -325,13 +367,18 @@ const POS: React.FC = () => {
             إتمام الطلب
           </button>
           <div className="flex gap-2">
-            <button className="btn-secondary flex-1 flex items-center justify-center gap-2">
+            <button
+              onClick={handlePrint}
+              disabled={items.length === 0}
+              className="btn-secondary flex-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
               <Printer size={18} />
               <span>طباعة</span>
             </button>
             <button
               onClick={clearCart}
-              className="btn-danger flex-1 flex items-center justify-center gap-2"
+              disabled={items.length === 0}
+              className="btn-danger flex-1 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <X size={18} />
               <span>إلغاء</span>
@@ -339,6 +386,15 @@ const POS: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Receipt Printer Modal */}
+      {showReceiptPrinter && currentOrder && (
+        <ReceiptPrinter
+          order={currentOrder}
+          onClose={() => setShowReceiptPrinter(false)}
+          onPrint={handlePrintReceipt}
+        />
+      )}
     </div>
   );
 };
